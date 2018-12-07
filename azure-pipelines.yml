@@ -13,7 +13,7 @@ steps:
 - script: dotnet build --configuration $(buildConfiguration)
   dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
 
-#- task: DotNetCoreCLI@2
+# - task: DotNetCoreCLI@2
 #  inputs:
  #   command: publish
   #  publishWebProjects: True
@@ -22,8 +22,8 @@ steps:
 
 - task: PublishBuildArtifacts@1
 
-#- task: AzureRmWebAppDeployment@3
-#inputs:
+# - task: AzureRmWebAppDeployment@3
+# inputs:
 #  azureSubscription: 'Visual Studio Enterprise'
 #  WebAppName: 'PuzzleServerTestDeploy'
 #  Package: $(Build.ArtifactsStagingDirectory)/**/ServerCore.zip
