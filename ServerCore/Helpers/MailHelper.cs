@@ -129,11 +129,12 @@ your email as the contact address for a team, then you also need to remove it on
     private void SendInternal(IEnumerable<string> recipients, bool bcc, string subject, string body, bool isHtml)
     {
         List<string> addresses = FlattenAddressLists(recipients);
-        while (addresses.Count > 0)
+        for (int start = 0; start < addresses.Count; start += MAX_RECIPIENTS)
         {
-            int n = Math.Min(addresses.Count, MAX_RECIPIENTS);
-            List<string> someAddresses = addresses.GetRange(0, n);
-            addresses.RemoveRange(0, n);
+            // Prevent overflow on the last batch of recipients in case 
+            // addresses.Count isn't an exact multiple of MAX_RECIPIENTS
+            int count = Math.Max(MAX_RECIPIENTS, addresses.Count - start);
+            List<string> someAddresses = addresses.GetRange(start, count);
             SendInternal2(someAddresses, bcc, subject, body, isHtml);
         }
     }
